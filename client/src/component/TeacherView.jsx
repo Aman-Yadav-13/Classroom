@@ -1,10 +1,11 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import StudentList from "./StudentList";
 import { useState } from "react";
 
 const TeacherView = () => {
     const { id,role } = useParams();
     const [view, setview] = useState('Student');
+    const navigate = useNavigate();
 
     const handleView = (updatedView) => {
         setview(updatedView);
@@ -33,6 +34,7 @@ const TeacherView = () => {
                             tabIndex={0}
                             className="menu menu-sm dropdown-content bg-primary rounded-box z-[1] mt-3 w-52 pl-4 shadow">
                             <li className="m-1 hover:scale-110 transition-transform" onClick={() => handleView('Student')}><p>Student's List</p></li>
+                            <li className="m-1 hover:scale-110 transition-transform" onClick={() => navigate('/')}><p>Log Out</p></li>
                         </ul>
                     </div>
                 </div>
