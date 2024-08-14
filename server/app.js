@@ -12,7 +12,7 @@ const mongoURI = 'mongodb+srv://aman13092003:rWyIKMDwZH7OW04g@cluster0.3vl4l.mon
 app.use(cors({
     origin: ['http://localhost:1234', 'https://classroom-coral.vercel.app'],
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
-    allowedHeaders: ['Content-Type'], 
+    allowedHeaders: 'Content-Type,Authorization', 
 }));
 
 app.use(express.json());
