@@ -1,0 +1,7 @@
+# Node modules
+client/node_modules/
+server/node_modules/
+
+# Build outputs and cache
+client/dist/
+client/.parcel-cache/
