@@ -14,7 +14,7 @@ const DeleteClassroom = () => {
         console.log(email);
 
         try{
-            const response = await axios.delete('http://localhost:3000/api/delete-classroom', {data : {id : email}});
+            const response = await axios.delete('https://classroom-ozmt.onrender.com/api/delete-classroom', {data : {id : email}});
 
             alert('Classroom Deleted Successfully...');
             navigate(`/principal/${id}`);

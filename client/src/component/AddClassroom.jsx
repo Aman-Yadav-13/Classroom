@@ -14,7 +14,7 @@ const AddClassroom = () => {
         setloading(!loading);
         console.log('inside handle click');
         try{
-            const response = await axios.post('http://localhost:3000/api/add-classroom', {
+            const response = await axios.post('https://classroom-ozmt.onrender.com/api/add-classroom', {
                 id : email,
                 name : name,
             })

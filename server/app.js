@@ -10,7 +10,7 @@ const app = express();
 const mongoURI = 'mongodb+srv://aman13092003:rWyIKMDwZH7OW04g@cluster0.3vl4l.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
 
 app.use(cors({
-    origin: ['http://localhost:1234'],
+    origin: ['http://localhost:1234', 'https://classroom-ozmt.onrender.com'],
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     allowedHeaders: ['Content-Type'], 
 }));

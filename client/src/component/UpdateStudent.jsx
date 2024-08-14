@@ -17,7 +17,7 @@ const UpdateStudent = () => {
         setloading(!loading);
         console.log('inside handle click');
         try{
-            const response = await axios.put('http://localhost:3000/api/update-student', {
+            const response = await axios.put('https://classroom-ozmt.onrender.com/api/update-student', {
                 id : email,
                 name : name,
                 password : password,

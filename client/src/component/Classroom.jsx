@@ -8,7 +8,7 @@ const Classroom = () => {
     useEffect(() => {
         async function getClassooms() {
             try{
-                const response = await axios.get('http://localhost:3000/api/classroom-list');
+                const response = await axios.get('https://classroom-ozmt.onrender.com/api/classroom-list');
 
                 setlist(response.data.data);
             }catch(err){

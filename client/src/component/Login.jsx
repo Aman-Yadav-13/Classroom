@@ -14,7 +14,7 @@ const Login = () => {
         setloading(!loading);
 
         try{
-            const response = await axios.post(`http://localhost:3000/api/login/${role}`, {
+            const response = await axios.post(`https://classroom-ozmt.onrender.com/api/login/${role}`, {
                 id : id,
                 password : password
             })

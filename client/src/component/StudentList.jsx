@@ -13,17 +13,17 @@ const StudentList = (props) => {
             try{
                 if(props.role == "Principal"){
                     console.log('principal', props.role, props.id);
-                    const response = await axios.get('http://localhost:3000/api/student-list');
+                    const response = await axios.get('https://classroom-ozmt.onrender.com/api/student-list');
                     console.log(response);
                     setlist(response.data.data);
                 }else if(props.role == 'Student'){
                     console.log("student", props.role, props.id);
-                    const response = await axios.get(`http://localhost:3000/api/student/student-list`,{params : {id : props.id}});
+                    const response = await axios.get(`https://classroom-ozmt.onrender.com/api/student/student-list`,{params : {id : props.id}});
                     console.log(response);
                     setlist(response.data.data);
                 }else{
                     console.log("teacher", props.role, props.id);
-                    const response = await axios.get('http://localhost:3000/api/teacher/student-list', {params : {id : props.id}});
+                    const response = await axios.get('https://classroom-ozmt.onrender.com/api/teacher/student-list', {params : {id : props.id}});
                     console.log(response);
                     setlist(response.data.data);
                 }

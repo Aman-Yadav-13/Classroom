@@ -10,7 +10,7 @@ const TeacherList = () => {
     useEffect(() => {
         const getList = async () => {
             try{
-                const response = await axios.get('http://localhost:3000/api/teacher-list');
+                const response = await axios.get('https://classroom-ozmt.onrender.com/api/teacher-list');
                 console.log(response);
                 setlist(response.data.data);
             }catch(err){
