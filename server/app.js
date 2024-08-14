@@ -9,14 +9,17 @@ const Classroom = require('./model/Classroom');
 const app = express();
 const mongoURI = 'mongodb+srv://aman13092003:rWyIKMDwZH7OW04g@cluster0.3vl4l.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
 
+// Middleware to enable CORS and configure allowed origins, methods, and headers
 app.use(cors({
     origin: ['http://localhost:1234', 'https://classroom-coral.vercel.app'],
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     allowedHeaders: 'Content-Type,Authorization', 
 }));
 
+// Middleware to parse JSON request bodies
 app.use(express.json());
 
+// Connect to MongoDB
 mongoose.connect(mongoURI)
 .then(() => {
     console.log('MongoDB connected successfully');
@@ -25,145 +28,154 @@ mongoose.connect(mongoURI)
     console.error('MongoDB connection error:', err);
 });
 
+// Endpoint to handle Principal login
 app.post('/api/login/Principal', async (req, res) => {
     console.log('inside principal');
-    try{
-        const {id, password} = req.body;
+    try {
+        const { id, password } = req.body;
         console.log(id, password);
 
-        const principal = await Principal.findOne({id : id, password : password});
+        const principal = await Principal.findOne({ id: id, password: password });
 
-        if(principal == null){
-            res.status(400).json({message : 'Invalid id or password'});
-        }else{
-            res.status(200).json({message : 'Login Successfull...'});
+        if (principal == null) {
+            res.status(400).json({ message: 'Invalid id or password' });
+        } else {
+            res.status(200).json({ message: 'Login Successful...' });
         }
-    }catch(err){
+    } catch (err) {
         console.log('Error during login : ', err);
-        res.status(500).json({message : 'Internal server error'});
+        res.status(500).json({ message: 'Internal server error' });
     }
-})
+});
 
+// Endpoint to handle Student login
 app.post('/api/login/Student', async (req, res) => {
     console.log('inside student');
-    try{
-        const {id, password} = req.body;
+    try {
+        const { id, password } = req.body;
         console.log(id, password);
 
-        const student = await Student.findOne({id : id, password : password});
+        const student = await Student.findOne({ id: id, password: password });
 
-        if(student == null){
-            res.status(400).json({message : 'Invalid id or password'});
-        }else{
-            res.status(200).json({message : 'Login Successfull...'});
+        if (student == null) {
+            res.status(400).json({ message: 'Invalid id or password' });
+        } else {
+            res.status(200).json({ message: 'Login Successful...' });
         }
-    }catch(err){
+    } catch (err) {
         console.log('Error during login : ', err);
-        res.status(500).json({message : 'Internal server error'});
+        res.status(500).json({ message: 'Internal server error' });
     }
-})
+});
 
+// Endpoint to handle Teacher login
 app.post('/api/login/Teacher', async (req, res) => {
     console.log('inside teacher');
-    try{
-        const {id, password} = req.body;
+    try {
+        const { id, password } = req.body;
         console.log(id, password);
 
-        const teacher = await Teacher.findOne({id : id, password : password});
+        const teacher = await Teacher.findOne({ id: id, password: password });
 
-        if(teacher == null){
-            res.status(400).json({message : 'Invalid id or password'});
-        }else{
-            res.status(200).json({message : 'Login Successfull...'});
+        if (teacher == null) {
+            res.status(400).json({ message: 'Invalid id or password' });
+        } else {
+            res.status(200).json({ message: 'Login Successful...' });
         }
-    }catch(err){
+    } catch (err) {
         console.log('Error during login : ', err);
-        res.status(500).json({message : 'Internal server error'});
+        res.status(500).json({ message: 'Internal server error' });
     }
-})
+});
 
+// Endpoint to fetch the list of teachers
 app.get('/api/teacher-list', async (req, res) => {
-    try{
+    try {
         const teacher = await Teacher.find();
 
-        if(teacher == null){
-            res.status(400).json({message : 'Teacher collection not found'});
-        }else{
-            res.status(200).json({message : 'Teachers fetched successfully...', data : teacher});
+        if (teacher == null) {
+            res.status(400).json({ message: 'Teacher collection not found' });
+        } else {
+            res.status(200).json({ message: 'Teachers fetched successfully...', data: teacher });
         }
-    }catch(err){
+    } catch (err) {
         console.log('Error during fetching teachers : ', err);
-        res.status(500).json({messae : 'Internal server error'});
+        res.status(500).json({ message: 'Internal server error' });
     }
-}) 
+});
 
+// Endpoint to fetch students for a specific teacher
 app.get('/api/teacher/student-list', async (req, res) => {
-    try{
-        const {id} = req.query;
-        const owner = await Teacher.findOne({id : id});
-        console.log('owner : ',owner)
-        const student = await Student.find({classroomid : owner.classroomid});
+    try {
+        const { id } = req.query;
+        const owner = await Teacher.findOne({ id: id });
+        console.log('owner : ', owner)
+        const student = await Student.find({ classroomid: owner.classroomid });
 
-        if(student == null){
-            res.status(400).json({message : 'Student collection not found'});
-        }else{
-            res.status(200).json({message : 'Students fetched successfully...', data : student});
+        if (student == null) {
+            res.status(400).json({ message: 'Student collection not found' });
+        } else {
+            res.status(200).json({ message: 'Students fetched successfully...', data: student });
         }
-    }catch(err){
-        console.log('Error during fetching teachers : ', err);
-        res.status(500).json({messae : 'Internal server error'});
+    } catch (err) {
+        console.log('Error during fetching students : ', err);
+        res.status(500).json({ message: 'Internal server error' });
     }
-})
+});
 
+// Endpoint to fetch the list of classrooms
 app.get('/api/classroom-list', async (req, res) => {
-    try{
+    try {
         const classroom = await Classroom.find();
 
-        if(classroom == null){
-            res.status(400).json({message : 'Classroom collection not found'});
-        }else{
-            res.status(200).json({message : 'Classroom fetched successfully...', data : classroom});
+        if (classroom == null) {
+            res.status(400).json({ message: 'Classroom collection not found' });
+        } else {
+            res.status(200).json({ message: 'Classroom fetched successfully...', data: classroom });
         }
-    }catch(err){
+    } catch (err) {
         console.log('Error during fetching Classroom : ', err);
-        res.status(500).json({messae : 'Internal server error'});
+        res.status(500).json({ message: 'Internal server error' });
     }
-}) 
+});
 
+// Endpoint to fetch the list of students
 app.get('/api/student-list', async (req, res) => {
     console.log('inside principal student list')
-    try{
+    try {
         const student = await Student.find();
 
-        if(student == null){
-            res.status(400).json({message : 'Student collection not found'});
-        }else{
-            res.status(200).json({message : 'Students fetched successfully...', data : student});
+        if (student == null) {
+            res.status(400).json({ message: 'Student collection not found' });
+        } else {
+            res.status(200).json({ message: 'Students fetched successfully...', data: student });
         }
-    }catch(err){
-        console.log('Error during fetching teachers : ', err);
-        res.status(500).json({messae : 'Internal server error'});
+    } catch (err) {
+        console.log('Error during fetching students : ', err);
+        res.status(500).json({ message: 'Internal server error' });
     }
-})
+});
 
+// Endpoint to fetch students for a specific student
 app.get('/api/student/student-list', async (req, res) => {
-    try{
-        const {id} = req.query;
-        const owner = await Student.findOne({id : id});
-        // console.log('owner : ',owner)
-        const student = await Student.find({classroomid : owner.classroomid});
+    try {
+        const { id } = req.query;
+        const owner = await Student.findOne({ id: id });
+        // console.log('owner : ', owner)
+        const student = await Student.find({ classroomid: owner.classroomid });
 
-        if(student == null){
-            res.status(400).json({message : 'Student collection not found'});
-        }else{
-            res.status(200).json({message : 'Students fetched successfully...', data : student});
+        if (student == null) {
+            res.status(400).json({ message: 'Student collection not found' });
+        } else {
+            res.status(200).json({ message: 'Students fetched successfully...', data: student });
         }
-    }catch(err){
-        console.log('Error during fetching teachers : ', err);
-        res.status(500).json({messae : 'Internal server error'});
+    } catch (err) {
+        console.log('Error during fetching students : ', err);
+        res.status(500).json({ message: 'Internal server error' });
     }
-})
+});
 
+// Endpoint to add a new teacher
 app.post('/api/add-teacher', async (req, res) => {
     try {
         const { name, id, password, classroomid } = req.body;
@@ -184,6 +196,7 @@ app.post('/api/add-teacher', async (req, res) => {
     }
 });
 
+// Endpoint to add a new student
 app.post('/api/add-student', async (req, res) => {
     try {
         const { name, id, password, classroomid, teacherid } = req.body;
@@ -206,6 +219,7 @@ app.post('/api/add-student', async (req, res) => {
     }
 });
 
+// Endpoint to add a new classroom
 app.post('/api/add-classroom', async (req, res) => {
     try {
         const { name, id } = req.body;
@@ -225,22 +239,23 @@ app.post('/api/add-classroom', async (req, res) => {
     }
 });
 
+// Endpoint to update an existing student
 app.put('/api/update-student', async (req, res) => {
     try {
         const { name, id, password, classroomid, teacherid } = req.body;
         console.log(req.body);
 
-        const updateStudent = await Student.findOneAndUpdate({id : id},{
+        const updateStudent = await Student.findOneAndUpdate({ id: id }, {
             name,
             id,
             password,
             classroomid,
             teacherid
-        }, {new : true});
+        }, { new: true });
 
-        if(!updateStudent){
-            res.status(400).json({message : 'Student not found'});
-        }else{
+        if (!updateStudent) {
+            res.status(400).json({ message: 'Student not found' });
+        } else {
             res.status(200).json({ message: 'Student updated successfully...' });
         }
     } catch (err) {
@@ -249,21 +264,22 @@ app.put('/api/update-student', async (req, res) => {
     }
 });
 
+// Endpoint to update an existing teacher
 app.put('/api/update-teacher', async (req, res) => {
     try {
         const { name, id, password, classroomid } = req.body;
         console.log(req.body);
 
-        const updateTeacher = await Teacher.findOneAndUpdate({id : id},{
+        const updateTeacher = await Teacher.findOneAndUpdate({ id: id }, {
             name,
             id,
             password,
             classroomid
-        }, {new : true});
+        }, { new: true });
 
-        if(!updateTeacher){
-            res.status(400).json({message : 'Teacher not found'});
-        }else{
+        if (!updateTeacher) {
+            res.status(400).json({ message: 'Teacher not found' });
+        } else {
             res.status(200).json({ message: 'Teacher updated successfully...' });
         }
     } catch (err) {
@@ -272,19 +288,20 @@ app.put('/api/update-teacher', async (req, res) => {
     }
 });
 
+// Endpoint to update an existing classroom
 app.put('/api/update-classroom', async (req, res) => {
     try {
         const { name, id } = req.body;
         console.log(req.body);
 
-        const updateClassroom = await Classroom.findOneAndUpdate({id : id},{
+        const updateClassroom = await Classroom.findOneAndUpdate({ id: id }, {
             id,
             name,
-        }, {new : true});
+        }, { new: true });
 
-        if(!updateClassroom){
-            res.status(400).json({message : 'Classroom not found'});
-        }else{
+        if (!updateClassroom) {
+            res.status(400).json({ message: 'Classroom not found' });
+        } else {
             res.status(200).json({ message: 'Classroom updated successfully...' });
         }
     } catch (err) {
@@ -293,6 +310,7 @@ app.put('/api/update-classroom', async (req, res) => {
     }
 });
 
+// Endpoint to delete a classroom
 app.delete('/api/delete-classroom', async (req, res) => {
     try {
         const { id } = req.body;
@@ -309,6 +327,7 @@ app.delete('/api/delete-classroom', async (req, res) => {
     }
 });
 
+// Endpoint to delete a teacher
 app.delete('/api/delete-teacher', async (req, res) => {
     try {
         const { id } = req.body;
@@ -325,6 +344,7 @@ app.delete('/api/delete-teacher', async (req, res) => {
     }
 });
 
+// Endpoint to delete a student
 app.delete('/api/delete-student', async (req, res) => {
     try {
         const { id } = req.body;
@@ -341,14 +361,16 @@ app.delete('/api/delete-student', async (req, res) => {
     }
 });
 
+// Simple route to check if the server is running
 app.get('/', (req, res) => {
     res.end('Server is running...');
 })
 
+// Start the server on port 3000
 app.listen(3000, (err) => {
-    if(err){
+    if (err) {
         console.log('Error occurred while establishing server : ', err);
-    }else{
+    } else {
         console.log('Server is established successfully...');
     }
 })

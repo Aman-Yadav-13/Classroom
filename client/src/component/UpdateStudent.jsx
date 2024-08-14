@@ -4,19 +4,21 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
 const UpdateStudent = () => {
-    const [email, setemail] = useState();
-    const [name, setname] = useState();
-    const [password, setpassword] = useState();
-    const [classroomid, setclassroomid] = useState();
-    const [teacherid, setteacherid] = useState();
-    const [loading, setloading] = useState(false);
-    const navigate = useNavigate();
-    const { id } = useParams();
+    const [email, setemail] = useState(); // State for storing student's email
+    const [name, setname] = useState(); // State for storing student's name
+    const [password, setpassword] = useState(); // State for storing student's password
+    const [classroomid, setclassroomid] = useState(); // State for storing student's classroom ID
+    const [teacherid, setteacherid] = useState(); // State for storing student's teacher ID
+    const [loading, setloading] = useState(false); // State to handle loading status
+    const navigate = useNavigate(); // Hook for navigation
+    const { id } = useParams(); // Extracts the `id` parameter from the URL
 
+    // Function to handle the click event for updating the student
     const handleClick = async () => {
-        setloading(!loading);
+        setloading(!loading); // Toggle loading state
         console.log('inside handle click');
         try{
+            // Send PUT request to update the student with the provided details
             const response = await axios.put('https://classroom-ozmt.onrender.com/api/update-student', {
                 id : email,
                 name : name,
@@ -26,20 +28,21 @@ const UpdateStudent = () => {
             })
 
             alert('Student updated successfully...');
-            navigate(`/principal/${id}`);
+            navigate(`/principal/${id}`); // Redirect to the principal view
         }catch(err){
             console.log('Student not updated : ', err);
             alert('Student not updated try again...');
-            setloading(!loading);
+            setloading(!loading); // Toggle loading state back
         }
     }
 
     return (
         <div>
-        {loading ? <Loading /> :
+        {loading ? <Loading /> : // Show loading component if `loading` is true
         <div className="flex justify-center items-center h-screen">
             <div className="artboard h-[90%] w-[20%] bg-base-300 flex items-center flex-wrap justify-center m-[5%] rounded-lg">
-            <label className="input input-bordered flex items-center gap-2 mt-6">
+                {/* Input for student's email */}
+                <label className="input input-bordered flex items-center gap-2 mt-6">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 16 16"
@@ -52,6 +55,7 @@ const UpdateStudent = () => {
                 </svg>
                 <input type="text" className="grow" placeholder="Student's Email" onChange={(event) => setemail(event.target.value)}/>
                 </label>
+                {/* Input for student's name */}
                 <label className="input input-bordered flex items-center gap-2">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -63,6 +67,7 @@ const UpdateStudent = () => {
                 </svg>
                 <input type="text" className="grow" placeholder="Student's Name" onChange={(event) => setname(event.target.value)}/>
                 </label>
+                {/* Input for teacher's ID */}
                 <label className="input input-bordered flex items-center gap-2">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -74,6 +79,7 @@ const UpdateStudent = () => {
                 </svg>
                 <input type="text" className="grow" placeholder="Teacher's Id" onChange={(event) => setteacherid(event.target.value)}/>
                 </label>
+                {/* Input for classroom's ID */}
                 <label className="input input-bordered flex items-center gap-2">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -85,6 +91,7 @@ const UpdateStudent = () => {
                 </svg>
                 <input type="text" className="grow" placeholder="Classroom's Id" onChange={(event) => setclassroomid(event.target.value)}/>
                 </label>
+                {/* Input for password */}
                 <label className="input input-bordered flex items-center gap-2">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -99,6 +106,7 @@ const UpdateStudent = () => {
                 <input type="password" className="grow" placeholder="Password" onChange={(event) => setpassword(event.target.value)}/>
                 </label>
                 <div>
+                    {/* Button to trigger the update */}
                     <button className="btn hover:bg-primary text-white" onClick={handleClick}>Update Student</button>
                 </div>
             </div>

@@ -17,73 +17,76 @@ import DeleteClassroom from "./component/DeleteClassroom";
 import DeleteTeacher from "./component/DeleteTeacher";
 import DeleteStudent from "./component/DeleteStudent";
 
+// Create a root element for rendering the React app
 const root = createRoot(document.getElementById('root'));
 
+// Define the routes for the application
 const router = createBrowserRouter([
     {
-        path : '/',
-        element : <Identification />
+        path: '/',
+        element: <Identification />
     },
     {
-        path : '/login/:role',
-        element : <Login />
+        path: '/login/:role',
+        element: <Login />
     },
     {
-        path : '/principal/:id',
-        element : <PrincipalView />
+        path: '/principal/:id',
+        element: <PrincipalView />
     },
     {
-        path : '/teacher/:id',
-        element : <TeacherView />
+        path: '/teacher/:id',
+        element: <TeacherView />
     },
     {
-        path : '/student/:id',
-        element : <StudentView />
+        path: '/student/:id',
+        element: <StudentView />
     },
     {
-        path : '/invalid/:role',
-        element : <Invalid />
+        path: '/invalid/:role',
+        element: <Invalid />
     },
     {
-        path : '/teacher/add/:role/:id',
-        element : <AddTeacher />
+        path: '/teacher/add/:role/:id',
+        element: <AddTeacher />
     },
     {
-        path : '/student/add/:role/:id',
-        element : <AddStudent />
+        path: '/student/add/:role/:id',
+        element: <AddStudent />
     },
     {
-        path : '/classroom/add/:role/:id',
-        element : <AddClassroom />
+        path: '/classroom/add/:role/:id',
+        element: <AddClassroom />
     },
     {
-        path : '/student/update/:role/:id',
-        element : <UpdateStudent />
+        path: '/student/update/:role/:id',
+        element: <UpdateStudent />
     },
     {
-        path : '/teacher/update/:role/:id',
-        element : <UpdateTeacher />
+        path: '/teacher/update/:role/:id',
+        element: <UpdateTeacher />
     },
     {
-        path : '/classroom/update/:role/:id',
-        element : <UpdateClassroom />
+        path: '/classroom/update/:role/:id',
+        element: <UpdateClassroom />
     },
     {
-        path : '/classroom/delete/:role/:id',
-        element : <DeleteClassroom />
+        path: '/classroom/delete/:role/:id',
+        element: <DeleteClassroom />
     },
     {
-        path : '/teacher/delete/:role/:id',
-        element : <DeleteTeacher />
+        path: '/teacher/delete/:role/:id',
+        element: <DeleteTeacher />
     },
     {
-        path : '/student/delete/:role/:id',
-        element : <DeleteStudent />
+        path: '/student/delete/:role/:id',
+        element: <DeleteStudent />
     },
     {
-        path : "/*",
-        element : <Error />
+        path: "/*",
+        element: <Error />
     }
 ])
 
+// Render the RouterProvider with the defined routes
 root.render(<RouterProvider router={router} />)
